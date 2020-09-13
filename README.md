@@ -1,4 +1,4 @@
-# RL Agent For PySC2 Environment
+# Parallel Multi-Environment Shaping Algorithm for Complex Multi-step Task
 
 [![MoveToBeacon](https://user-images.githubusercontent.com/195271/37241507-0d7418c2-2463-11e8-936c-18d08a81d2eb.gif)](https://youtu.be/gEyBzcPU5-w)
 [![CollectMineralShards](https://user-images.githubusercontent.com/195271/37241785-b8bd0b04-2467-11e8-9ff3-e4335a7c20ee.gif)](https://youtu.be/gEyBzcPU5-w)
