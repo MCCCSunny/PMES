@@ -65,25 +65,23 @@ Firstly, many thanks to [Roman Ring](https://github.com/inoryy). We make some im
 
 For more literature, please refer to the References part of our [paper](https://www.sciencedirect.com/science/article/pii/S092523122030655X?via%3Dihub). 
 
-## Citation section
+## Citation
 
 Ma, C., Li, Z., Lin, D. and Zhang, J., 2020. Parallel Multi-Environment Shaping Algorithm for Complex Multi-step Task. Neurocomputing, 402, pp. 323--335.
 
 * Bibtex
-@article{DBLP:journals/ijon/MaLLZ20,
-  author    = {Cong Ma and
-               Zhizhong Li and
-               Dahua Lin and
+<pre name="code">
+@article{ma2020parallel,
+  author    = {Cong Ma and 
+               Zhizhong Li and 
+               Dahua Lin and 
                Jiangshe Zhang},
-  title     = {Parallel Multi-Environment Shaping Algorithm for Complex Multi-step
-               Task},
+  title     = {Parallel Multi-Environment Shaping Algorithm for Complex Multi-step Task},
   journal   = {Neurocomputing},
   volume    = {402},
   pages     = {323--335},
   year      = {2020},
-  url       = {https://doi.org/10.1016/j.neucom.2020.04.070},
   doi       = {10.1016/j.neucom.2020.04.070},
-  timestamp = {Mon, 15 Jun 2020 16:52:59 +0200},
-  biburl    = {https://dblp.org/rec/journals/ijon/MaLLZ20.bib},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
+  publisher = {Elsevier}
 }
+</pre>
