@@ -1,6 +1,6 @@
 # Parallel Multi-Environment Shaping Algorithm for Complex Multi-step Task
 
-<img width="315" src="https://github.com/MCCCSunny/PMES/blob/master/video/depots.gif" alt="Build Supply Depots"/><img width="315" src="https://github.com/MCCCSunny/PMES/blob/master/video/barracks.gif" alt="Build Barracks"/><img width="315" src="https://github.com/MCCCSunny/PMES/blob/master/video/marines.gif" alt="Build Marines"/>
+<img width="300" src="https://github.com/MCCCSunny/PMES/blob/master/video/depots.gif" alt="Build Supply Depots"/><img width="300" src="https://github.com/MCCCSunny/PMES/blob/master/video/barracks.gif" alt="Build Barracks"/><img width="300" src="https://github.com/MCCCSunny/PMES/blob/master/video/marines.gif" alt="Build Marines"/>
 
 ## Introduction
 This repo is for this paper [Parallel Multi-Environment Shaping Algorithm for Complex Multi-step Task](https://www.sciencedirect.com/science/article/pii/S092523122030655X?via%3Dihub). In this paper, we propose a novel algorithm called Paralleled Multi-Environment Shaping algorithm (PMES), where several sub-environments are built based on human knowledge to make the agent aware of the importance of intermediate steps, each of which corresponds to each key intermediate steps. 
