@@ -1,13 +1,3 @@
-
-## Changes
-In this branch, we add some new map for task BuildMarines.
-To use to the new training with new maps, **copy the killers_map directory to StarcraftII/Maps/**
-
-Note:
-
-if you set ``--maps``, then ``--envs`` and ``map`` will be ignored.
-
-
 # (D)RL Agent For PySC2 Environment
 
 [![MoveToBeacon](https://user-images.githubusercontent.com/195271/37241507-0d7418c2-2463-11e8-936c-18d08a81d2eb.gif)](https://youtu.be/gEyBzcPU5-w)
@@ -23,6 +13,10 @@ if you set ``--maps``, then ``--envs`` and ``map`` will be ignored.
 This repo is for this paper [Parallel Multi-Environment Shaping Algorithm for Complex Multi-step Task](https://www.sciencedirect.com/science/article/pii/S092523122030655X?via%3Dihub). In this paper, we propose a novel algorithm called Paralleled Multi-Environment Shaping algorithm (PMES), where several sub-environments are built based on human knowledge to make the agent aware of the importance of intermediate steps, each of which corresponds to each key intermediate steps. 
 
 ## Running
+We add some new map for task BuildMarines. To use to the new training with new maps, **copy the killers_map directory to StarcraftII/Maps/**
+
+Note:
+if you set ``--maps``, then ``--envs`` and ``map`` will be ignored.
 
 * To train a PMES agent, execute `python main.py --gpu $GPU --work_dir *** --run_id 1 --sz 16 --envs 16 --render 0 --updates 50000 --lr 0.00001 --vf_coef 0.25 --ent_coef 0.00009 --discount 0.99 --clip_grads 1 --save_interval 1000 --maps '{"BuildMarines_15min": 10, "BuildMarinesA_4-6min_RP_new1": 1, "BuildMarinesB_4-6min_RP_new1": 3, "BuildMarinesC_4-6min_ARP_newx": 2}' --num_snapshot 5 --optimizer adam --beta1 0.9 --beta2 0.999 --step_mul 8`.
 
