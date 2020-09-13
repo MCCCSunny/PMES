@@ -21,7 +21,6 @@ if you set ``--maps``, then ``--envs`` and ``map`` will be ignored.
 * To train a PMES agent, execute `python main.py --gpu $GPU --work_dir *** --run_id 1 --sz 16 --envs 16 --render 0 --updates 50000 --lr 0.00001 --vf_coef 0.25 --ent_coef 0.00009 --discount 0.99 --clip_grads 1 --save_interval 1000 --maps '{"BuildMarines_15min": 10, "BuildMarinesA_4-6min_RP_new1": 1, "BuildMarinesB_4-6min_RP_new1": 3, "BuildMarinesC_4-6min_ARP_newx": 2}' --num_snapshot 5 --optimizer adam --beta1 0.9 --beta2 0.999 --step_mul 8`.
 
 * To train a shaping agent, execute `python main.py --gpu $GPU --work_dir ** --run_id 2 --sz 16 --envs 16 --render 0 --updates 500000 --lr 0.00001 --vf_coef 0.25 --ent_coef 0.00009 --discount 0.99 --clip_grads 1 --save_interval 1000 --map BuildMarines_15min_shaping_ARP_111 --num_snapshot 1000 --optimizer adam --beta1 0.9 --beta2 0.999 --step_mul 8"`
-* To train a curriculum learning agent, execute 
 
 * To train a curriculum learning agent, execute `python main.py --gpu $GPU --work_dir ** --run_id 1 --sz 16 --envs 16 --render 0 --updates 500000 --lr 0.00001 --vf_coef 0.25 --ent_coef 0.00009 --discount 0.99 --clip_grads 1 --save_interval 1000 --map BuildMarinesA_4-6min_RP_new1 --num_snapshot 5 --optimizer adam --beta1 0.9 --beta2 0.999 --step_mul 8`, denoted as "agent_A"; then initialize the new agent using "agent_A", and train it under the SubEnv_B, denoted as "agent_B"; as in this way, train the agent under SubEnv_C, OrigEnv in order. 
 
@@ -61,6 +60,30 @@ Firstly, many thanks to [Roman Ring](https://github.com/inoryy). We make some im
 ## Related literature
 
 [1] [Parallel Multi-Environment Shaping Algorithm for Complex Multi-step Task](https://www.sciencedirect.com/science/article/pii/S092523122030655X?via%3Dihub)
+
 [2] [Replicating deepmind starcraft ii reinforcement learning benchmark with actor-critic methods](http://hdl.handle.net/10062/61039)
 
 For more literature, please refer to the References part of our [paper](https://www.sciencedirect.com/science/article/pii/S092523122030655X?via%3Dihub). 
+
+## Citation section
+
+Ma, C., Li, Z., Lin, D. and Zhang, J., 2020. Parallel Multi-Environment Shaping Algorithm for Complex Multi-step Task. Neurocomputing, 402, pp. 323--335.
+
+* Bibtex
+@article{DBLP:journals/ijon/MaLLZ20,
+  author    = {Cong Ma and
+               Zhizhong Li and
+               Dahua Lin and
+               Jiangshe Zhang},
+  title     = {Parallel Multi-Environment Shaping Algorithm for Complex Multi-step
+               Task},
+  journal   = {Neurocomputing},
+  volume    = {402},
+  pages     = {323--335},
+  year      = {2020},
+  url       = {https://doi.org/10.1016/j.neucom.2020.04.070},
+  doi       = {10.1016/j.neucom.2020.04.070},
+  timestamp = {Mon, 15 Jun 2020 16:52:59 +0200},
+  biburl    = {https://dblp.org/rec/journals/ijon/MaLLZ20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
