@@ -25,8 +25,7 @@ if you set ``--maps``, then ``--envs`` and ``map`` will be ignored.
 
 * To train a curriculum learning agent, execute `python main.py --gpu $GPU --work_dir ** --run_id 1 --sz 16 --envs 16 --render 0 --updates 500000 --lr 0.00001 --vf_coef 0.25 --ent_coef 0.00009 --discount 0.99 --clip_grads 1 --save_interval 1000 --map BuildMarinesA_4-6min_RP_new1 --num_snapshot 5 --optimizer adam --beta1 0.9 --beta2 0.999 --step_mul 8`, denoted as "agent_A"; then initialize the new agent using "agent_A", and train it under the SubEnv_B, denoted as "agent_B"; as in this way, train the agent under SubEnv_C, OrigEnv in order. 
 
-* To train a PLAID agent, 
-
+* To train a PLAID agent, like the curriculum learning agent, get the "agent_A" and "agent_B"; then, set '--distill' is True, and set the path of "agent_A" and "agent_B", to learn a new agent, denoted as "agent_AB"; then train this agent under SubEnv_C to get the "agent_C', distill "agent_AB" and "agent_C" to get "agent_ABC". Lastly, we train the agent under the original environment OrigEnv based on "agent_ABC". Detailed steps can refer to our [paper](https://www.sciencedirect.com/science/article/pii/S092523122030655X?via%3Dihub). 
 
 * To resume training from last checkpoint, specify `--restore` flag
 * To run in inference mode, specify `--test` flag
