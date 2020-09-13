@@ -11,9 +11,9 @@ from common import Config
 from common.env import make_envs
 from common import killers_map
 
-from rl.agent import A2CAgent
+from rl.agent import A2CAgent, A2CAgent_expert, A2CAgent_distill
 from rl.model import fully_conv
-from rl import Runner, EnvWrapper
+from rl import Runner, Runner_distill, EnvWrapper
 
 import time
 
@@ -33,6 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('--updates', type=int, default=1000000, help='how many new updates to run')
     parser.add_argument('--max_update', type=int, default=1000000, help='max number of global updates')
     parser.add_argument('--lr', type=float, default=7e-4)
+    parser.add_argument('--lr_decay', type=bool, default=False, help='whether or not the lr regularize')
     parser.add_argument('--lr_decay_step', type=float, default=1000000)
     parser.add_argument('--lr_decay_rate', type=float, default=0.96, help='0.12 every 50 decay')
     parser.add_argument('--vf_coef', type=float, default=0.25, help='coef for value loss')
@@ -63,10 +64,13 @@ if __name__ == '__main__':
     parser.add_argument('--ckptPath', type=str, default=None, help="the path of the trained model")
     parser.add_argument('--nextStatePath', type=str, help='the path to save the next state')
     parser.add_argument('--scale', type=int, default=0, help='use to scale the reward in the shaping algorithm, 111ARPshaping=1, 124shaping=4, 139shaping=9')
-    parser.add_argument('--distill_restore', type=bool, default=False, help='restore the model from the distill model or the original model')
-    parser.add_argument('--init_op', type=bool, default=False, help='whether or not initialize the optimizer')
-    parser.add_argument('--restore_each', type=str, help='restore each ckpt.')
-
+    parser.add_argument('--distill', type=bool, default=False, help='whether or not run the distillation')
+    parser.add_argument('--expertPath', type=str, default=None, help='the paths where the experts model are saved')
+    parser.add_argument('--anneal_settings', type=dict, default={'annealing_schedule':'log', 'initial_temperature': 2.0}, help='the anneal setting of the prob')
+    parser.add_argument('--Student_restore', type=bool, default=False, help='if the distill process is stopped, restore from the checkpoint')
+    parser.add_argument('--Student_number', type=int, default=None, help='restart from the number **')
+    parser.add_argument('--policy_coef', type=float, default=0.0005, help ='when the distill model is adopted.')
+    
     args = parser.parse_args()
 
     # seeds
@@ -82,12 +86,9 @@ if __name__ == '__main__':
     # preprocess args
     if args.maps == '':
         args.maps = '{"' + args.map + '": ' + str(args.envs) + '}'
-    if sys.platform == 'win32':
-        args.maps = eval(args.maps)
-    elif sys.platform == "linux" or platform == "linux2":
-        args.maps = json.loads(args.maps, object_pairs_hook=OrderedDict)
-        args.map, args.envs = list(args.maps.items())[0]
-
+        
+    args.maps = json.loads(args.maps, object_pairs_hook=OrderedDict)
+    
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
 
@@ -176,24 +177,48 @@ if __name__ == '__main__':
         args.ckptfile = None
 
     # begin to train the agent 
-    try:
-        sess = tf.Session(config=tf_config)
+    if not args.distill:
+        try:
+            sess = tf.Session(config=tf_config)
+            envs = EnvWrapper(make_envs(args), config)
+            agent = A2CAgent(sess, fully_conv, config, args.discount, args.lr, args.vf_coef, args.ent_coef, args.clip_grads,
+                             weight_dir, log_dir, args)
+            runner = Runner(envs, agent, args, args.steps)
+
+        except Exception as e:  
+            print('--exit--')
+            print(e)
+            if envs is not None:
+                envs.close()
+            import sys
+            sys.exit(-1)
+
+        runner.run(args.updates, not args.test)
+
+        if args.save_replay:
+            envs.save_replay(replay_dir=('PySC2Replays' if args.run_id == -1 else args.run_id))
+
+        envs.close()
+        
+    elif args.distill:
+        if args.expertPath:
+            paths = args.expertPath.split('?')
+            args.paths = paths
+        else:
+            print ('Please input the path of expert models')
+            import sys
+            sys.exit(-1)
+
+        agent_eA = A2CAgent_expert(None, fully_conv, config, args, paths[0])
+        agent_eB = A2CAgent_expert(None, fully_conv, config, args, paths[1])
+        agent = A2CAgent_distill(None, agent_eA, agent_eB, fully_conv, config, weight_dir, log_dir, args)#, 'distill')
+
         envs = EnvWrapper(make_envs(args), config)
-        agent = A2CAgent(sess, fully_conv, config, args.discount, args.lr, args.vf_coef, args.ent_coef, args.clip_grads,
-                         weight_dir, log_dir, args)
-        runner = Runner(envs, agent, args, args.steps)
+        runner_distill = Runner_distill(envs, agent_eA, agent_eB, agent, args, args.steps)
+        runner_distill.run(args.updates, args.anneal_settings, not args.test)
 
-    except Exception as e:  
-        print('--exit--')
-        print(e)
-        if envs is not None:
-            envs.close()
-        import sys
-        sys.exit(-1)
+        if args.save_replay:
+            envs.save_replay(replay_dir=('PySC2Replays' if args.run_id == -1 else args.run_id))
 
-    runner.run(args.updates, not args.test)
-
-    if args.save_replay:
-        envs.save_replay(replay_dir=('PySC2Replays' if args.run_id == -1 else args.run_id))
-
-    envs.close()
+        envs.close()
+       
