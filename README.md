@@ -47,7 +47,7 @@ For the trained agents of different algorithms, please watch this [Supplementary
 
 ## Acknowledgements
 
-Firstly, many thanks to [Roman Ring](https://github.com/inoryy). We make some improvement based on his bachelor thesis, and then proposed the [PMES algorithm](https://www.sciencedirect.com/science/article/pii/S092523122030655X?via%3Dihub). Here, we would like to thank the members of The Killers team and their instructors Lisen Mu and Jingchu Liu in DeeCamp 2018 for the insightful discussions. The group members of Killers have Zhizhong Li, Cong Ma, Hongyi Guo, Jiamin He, Bin Hu, Yiquan Lin, Yinmin Zhang, Dan Lin, Mincai Lai, Gangyi Lin. Also, we would like to thank Ke Bai for the comments.
+Firstly, many thanks to [Roman Ring](https://github.com/inoryy). We make some improvement based on his bachelor thesis, and then proposed the [PMES algorithm](https://www.sciencedirect.com/science/article/pii/S092523122030655X?via%3Dihub). Here, we would like to thank the members of The Killers team and their instructors Lisen Mu and Jingchu Liu in DeeCamp 2018 for the insightful discussions. The group members of Killers have Zhizhong Li, Cong Ma, Hongyi Guo, Jiamin He, Bin Hu, Yiquan Lin, Yinmin Zhang, Dan Lin, Mincai Lai, Gangyi Li. Also, we would like to thank Ke Bai for the comments.
 
 
 ## Related literature
